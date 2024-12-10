@@ -1,8 +1,10 @@
 const Noticia = require('../models/noticia.model');
+const Persona = require('../models/persona.model');
 
 async function seedDatabase() {
   try {
     await Noticia.deleteMany({});
+    await Persona.deleteMany({});
 
     // Noticias
     const noticia_1 = await Noticia.create({
@@ -17,6 +19,27 @@ async function seedDatabase() {
       titulo: 'El futuro de Colapinto en la Fórmula 1',
       descripcion: 'La incertidumbre domina hoy por hoy el futuro de Franco Colapinto en la Fórmula 1. El piloto argentino disputó su último Gran Premio en Abu Dhabi el último fin de semana y su lugar en la escudería será ocupado por el español Carlos Sainz.'
     });
+
+    const persona_1 = await Persona.create({
+      nombre: 'Aurelio',
+      apellido: 'Gareca',
+      email: 'myemail@example.com'
+    });
+    const persona_2 = await Persona.create({
+      nombre: 'Valentina',
+      apellido: 'Álvarez',
+      email: 'heremail@outlook.com'
+    });
+    const persona_3 = await Persona.create({
+      nombre: 'Silvina',
+      apellido: 'Álvares',
+      email: 'heremailtoo@gmail.com'
+    });
+    persona_1.publicaciones.push({
+      descripcion: 'Hola, soy la publicación de Aurelio'
+    });
+    persona_1.amigos.push(persona_2._id);
+    persona_1.save();
   } catch (error) {
     console.error(error.message);
   }
